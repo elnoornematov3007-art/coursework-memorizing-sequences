@@ -61,3 +61,12 @@
 .game-status {
   margin: 0;
 }
+
+.history {
+  min-width: 250px;
+  text-align: left;
+}
+
+.history h2 {
+  margin-top: 0;
+}
