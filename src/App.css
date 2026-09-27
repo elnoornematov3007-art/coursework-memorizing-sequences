@@ -29,3 +29,9 @@
   align-items: center;
   gap: 10px;
 }
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 10px;
+}
