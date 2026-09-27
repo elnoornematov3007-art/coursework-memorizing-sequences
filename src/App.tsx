@@ -15,6 +15,18 @@ function App() {
               <option value="medium">Средний</option>
               <option value="hard">Сложный</option>
             </select>
+
+            <div className="game-board">
+              {Array.from({ length: 9 }, (_, index) => (
+                <button
+                  key={index}
+                  className="game-cell"
+                  type="button"
+                  aria-label={`Ячейка ${index + 1}`}
+                />
+              ))}
+            </div>
+    
           </div>
       </main>
     </div>
