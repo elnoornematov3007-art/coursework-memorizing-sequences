@@ -43,3 +43,12 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+.game-info {
+  display: flex;
+  gap: 30px;
+}
+
+.game-info p {
+  margin: 0;
+}
