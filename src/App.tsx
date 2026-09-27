@@ -26,6 +26,11 @@ function App() {
                 />
               ))}
             </div>
+          
+            <div className="game-info">
+              <p>Текущая длина: 1</p>
+              <p>Рекорд: 0</p>
+            </div>
     
           </div>
       </main>
