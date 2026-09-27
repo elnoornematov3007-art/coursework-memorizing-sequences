@@ -15,24 +15,38 @@ function App() {
               <option value="medium">Средний</option>
               <option value="hard">Сложный</option>
             </select>
-
-            <div className="game-board">
-              {Array.from({ length: 9 }, (_, index) => (
-                <button
-                  key={index}
-                  className="game-cell"
-                  type="button"
-                  aria-label={`Ячейка ${index + 1}`}
-                />
-              ))}
-            </div>
-          
-            <div className="game-info">
-              <p>Текущая длина: 1</p>
-              <p>Рекорд: 0</p>
-            </div>
-    
           </div>
+
+          <div className="game-board">
+            {Array.from({ length: 9 }, (_, index) => (
+              <button
+                key={index}
+                className="game-cell"
+                type="button"
+                aria-label={`Ячейка ${index + 1}`}
+              />
+            ))}
+          </div>
+          
+          <div className="game-info">
+            <p>Текущая длина: 1</p>
+            <p>Рекорд: 0</p>
+          </div>
+
+          <div className="game-controls">
+            <button type="button">Старт</button>
+            <button type="button">Начать заново</button>
+          </div>
+
+          <p className="game-status">
+            Выберите сложность и нажмите «Старт»
+          </p>
+        </section>
+
+        <aside className="history">
+          <h2>История результатов</h2>
+          <p>История пока пуста</p>
+        </aside>
       </main>
     </div>
   )
