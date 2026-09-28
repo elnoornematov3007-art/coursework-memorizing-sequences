@@ -5,6 +5,7 @@ import './App.css'
 function App() {
   const [sequence, setSequence] = useState<number[]>([])
   const [activeCell, setActiveCell] = useState<number | null>(null)
+  const [userSequence, setUserSequence] = useState<number[]>([])
 
   async function showSequence(sequenceToShow: number[]) {
     for (const cell of sequenceToShow) {
@@ -22,8 +23,13 @@ function App() {
     const newSequence = generateSequence(1)
 
     setSequence(newSequence)
+    setUserSequence([])
 
     await showSequence(newSequence)
+  }
+
+  function handleCellClick(index: number) {
+    setUserSequence((previous) => [...previous, index])
   }
 
   return (
@@ -48,6 +54,7 @@ function App() {
                 key={index}
                 className={`game-cell ${activeCell === index ? 'active' : ''}`}
                 type="button"
+                onClick={() => handleCellClick(index)}
                 aria-label={`Ячейка ${index + 1}`}
               />
             ))}
