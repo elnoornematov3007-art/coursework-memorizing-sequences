@@ -3,6 +3,11 @@ import generateSequence from './utils/generateSequence'
 import checkAnswer from './utils/checkAnswer'
 import './App.css'
 
+type GameResult = {
+  difficulty: string
+  maxLength: number
+}
+
 function App() {
   const [sequence, setSequence] = useState<number[]>([])
   const [activeCell, setActiveCell] = useState<number | null>(null)
@@ -11,6 +16,7 @@ function App() {
   const [status, setStatus] = useState('Выберите сложность и нажмите «Старт»')
   const [difficulty, setDifficulty] = useState('easy')
   const [record, setRecord] = useState(0)
+  const [history, setHistory] = useState<GameResult[]>([])
 
   function getShowTime() {
     if (difficulty === 'easy') {return 800}
@@ -54,6 +60,15 @@ function App() {
     if (index !== sequence[currentIndex]) {
       setIsUserTurn(false)
       setStatus('Ошибка! Игра окончена')
+
+      setHistory((previous) => [
+        ...previous,
+        {
+          difficulty: difficulty,
+          maxLength: sequence.length - 1,
+        },
+      ])
+
       return
     }
 
@@ -136,7 +151,11 @@ function App() {
 
         <aside className="history">
           <h2>История результатов</h2>
-          <p>История пока пуста</p>
+          {history.length === 0 ? (<p>История пока пуста</p>) : (
+            <ul>{history.map((result, index) => (
+               <li key={index}> {result.difficulty} — {result.maxLength}</li>))}
+            </ul>
+          )}
         </aside>
       </main>
     </div>
