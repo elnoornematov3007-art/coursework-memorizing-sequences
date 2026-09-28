@@ -38,6 +38,13 @@ function App() {
       return
     }
 
+    const currentIndex = userSequence.length
+
+    if (index !== sequence[currentIndex]) {
+      setIsUserTurn(false)
+      return
+    }
+
     setUserSequence((previous) => [...previous, index])
 
     setActiveCell(index)
