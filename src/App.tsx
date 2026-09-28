@@ -104,6 +104,14 @@ function App() {
     }
   }
 
+  function handleRestart() {
+    setSequence([])
+    setUserSequence([])
+    setActiveCell(null)
+    setIsUserTurn(false)
+    setStatus('Выберите сложность и нажмите «Старт»')
+  }
+
   return (
     <div className="app">
       <h1>Запоминание последовательностей</h1>
@@ -143,7 +151,7 @@ function App() {
 
           <div className="game-controls">
             <button type="button" onClick={handleStart}>Старт</button>
-            <button type="button">Начать заново</button>
+            <button type="button" onClick={handleRestart}>Начать заново</button>
           </div>
 
           <p className="game-status">{status}</p>
