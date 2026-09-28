@@ -5,7 +5,19 @@ import './App.css'
 function App() {
   const [sequence, setSequence] = useState<number[]>([])
   const [activeCell, setActiveCell] = useState<number | null>(null)
-  
+
+  async function showSequence(sequenceToShow: number[]) {
+    for (const cell of sequenceToShow) {
+      setActiveCell(cell)
+
+      await new Promise((resolve) => setTimeout(resolve, 600))
+
+      setActiveCell(null)
+
+      await new Promise((resolve) => setTimeout(resolve, 200))
+    }
+  }
+
   return (
     <div className="app">
       <h1>Запоминание последовательностей</h1>
@@ -26,7 +38,7 @@ function App() {
             {Array.from({ length: 9 }, (_, index) => (
               <button
                 key={index}
-                className="game-cell"
+                className={`game-cell ${activeCell === index ? 'active' : ''}`}
                 type="button"
                 aria-label={`Ячейка ${index + 1}`}
               />

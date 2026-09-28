@@ -44,6 +44,10 @@
   cursor: pointer;
 }
 
+.game-cell.active {
+  background-color: #ffffff;
+}
+
 .game-info {
   display: flex;
   gap: 30px;
