@@ -1,6 +1,11 @@
+import { useState } from 'react'
+import generateSequence from './utils/generateSequence'
 import './App.css'
 
 function App() {
+  const [sequence, setSequence] = useState<number[]>([])
+  const [activeCell, setActiveCell] = useState<number | null>(null)
+  
   return (
     <div className="app">
       <h1>Запоминание последовательностей</h1>
