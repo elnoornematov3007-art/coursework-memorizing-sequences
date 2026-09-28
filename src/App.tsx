@@ -17,6 +17,7 @@ function App() {
   const [difficulty, setDifficulty] = useState('easy')
   const [record, setRecord] = useState(0)
   const [history, setHistory] = useState<GameResult[]>([])
+  const [isGameStarted, setIsGameStarted] = useState(false)
 
   function getShowTime() {
     if (difficulty === 'easy') {return 800}
@@ -37,6 +38,8 @@ function App() {
   }
 
   async function handleStart() {
+    setIsGameStarted(true)
+    
     const newSequence = generateSequence(1)
 
     setSequence(newSequence)
@@ -109,6 +112,7 @@ function App() {
     setUserSequence([])
     setActiveCell(null)
     setIsUserTurn(false)
+    setIsGameStarted(false)
     setStatus('Выберите сложность и нажмите «Старт»')
   }
 
@@ -125,6 +129,7 @@ function App() {
               id="difficulty"
               value={difficulty}
               onChange={(event) => setDifficulty(event.target.value)}
+              disabled={isGameStarted}
             >
               <option value="easy">Лёгкий</option>
               <option value="medium">Средний</option>
@@ -150,7 +155,7 @@ function App() {
           </div>
 
           <div className="game-controls">
-            <button type="button" onClick={handleStart}>Старт</button>
+            <button type="button" onClick={handleStart} disabled={isGameStarted}>Старт</button>
             <button type="button" onClick={handleRestart}>Начать заново</button>
           </div>
 
