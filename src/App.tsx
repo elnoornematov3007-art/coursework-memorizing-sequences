@@ -6,6 +6,7 @@ function App() {
   const [sequence, setSequence] = useState<number[]>([])
   const [activeCell, setActiveCell] = useState<number | null>(null)
   const [userSequence, setUserSequence] = useState<number[]>([])
+  const [isUserTurn, setIsUserTurn] = useState(false)
 
   async function showSequence(sequenceToShow: number[]) {
     for (const cell of sequenceToShow) {
@@ -24,12 +25,23 @@ function App() {
 
     setSequence(newSequence)
     setUserSequence([])
+    setIsUserTurn(false)
 
     await showSequence(newSequence)
+
+    setIsUserTurn(true)
   }
 
-  function handleCellClick(index: number) {
+  async function handleCellClick(index: number) {
+    if (!isUserTurn) {
+      return
+    }
+
     setUserSequence((previous) => [...previous, index])
+
+    setActiveCell(index)
+    await new Promise((resolve) => setTimeout(resolve, 200))
+    setActiveCell(null)
   }
 
   return (
