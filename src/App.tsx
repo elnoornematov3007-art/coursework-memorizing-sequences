@@ -15,9 +15,15 @@ function App() {
   const [isUserTurn, setIsUserTurn] = useState(false)
   const [status, setStatus] = useState('Выберите сложность и нажмите «Старт»')
   const [difficulty, setDifficulty] = useState('easy')
-  const [record, setRecord] = useState(0)
-  const [history, setHistory] = useState<GameResult[]>([])
   const [isGameStarted, setIsGameStarted] = useState(false)
+  const [record, setRecord] = useState(() => {
+    const savedRecord = localStorage.getItem('record')
+    return savedRecord ? Number(savedRecord) : 0
+  })
+  const [history, setHistory] = useState<GameResult[]>(() => {
+    const savedHistory = localStorage.getItem('history')
+    return savedHistory ? JSON.parse(savedHistory) : []
+  })
 
   function getShowTime() {
     if (difficulty === 'easy') {return 800}
@@ -64,13 +70,19 @@ function App() {
       setIsUserTurn(false)
       setStatus('Ошибка! Игра окончена')
 
-      setHistory((previous) => [
-        ...previous,
-        {
-          difficulty: difficulty,
-          maxLength: sequence.length - 1,
-        },
-      ])
+      setHistory((previous) => {
+        const newHistory = [
+          ...previous,
+          {
+            difficulty: difficulty,
+            maxLength: sequence.length - 1,
+          },
+        ] 
+
+        localStorage.setItem('history', JSON.stringify(newHistory))
+
+        return newHistory
+      })
 
       return
     }
@@ -89,6 +101,7 @@ function App() {
 
         if (sequence.length > record) {
           setRecord(sequence.length)
+          localStorage.setItem('record', String(sequence.length))
         }
 
         const nextSequence = [...sequence, ...generateSequence(1)]
