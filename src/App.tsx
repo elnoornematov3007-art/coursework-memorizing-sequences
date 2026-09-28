@@ -18,6 +18,14 @@ function App() {
     }
   }
 
+  async function handleStart() {
+    const newSequence = generateSequence(1)
+
+    setSequence(newSequence)
+
+    await showSequence(newSequence)
+  }
+
   return (
     <div className="app">
       <h1>Запоминание последовательностей</h1>
@@ -51,7 +59,7 @@ function App() {
           </div>
 
           <div className="game-controls">
-            <button type="button">Старт</button>
+            <button type="button" onClick={handleStart}>Старт</button>
             <button type="button">Начать заново</button>
           </div>
 
