@@ -10,6 +10,7 @@ function App() {
   const [isUserTurn, setIsUserTurn] = useState(false)
   const [status, setStatus] = useState('Выберите сложность и нажмите «Старт»')
   const [difficulty, setDifficulty] = useState('easy')
+  const [record, setRecord] = useState(0)
 
   function getShowTime() {
     if (difficulty === 'easy') {return 800}
@@ -68,6 +69,10 @@ function App() {
         setStatus('Правильно!')
         setIsUserTurn(false)
 
+        if (sequence.length > record) {
+          setRecord(sequence.length)
+        }
+
         const nextSequence = [...sequence, ...generateSequence(1)]
 
         setSequence(nextSequence)
@@ -117,8 +122,8 @@ function App() {
           </div>
           
           <div className="game-info">
-            <p>Текущая длина: 1</p>
-            <p>Рекорд: 0</p>
+            <p>Текущая длина: {sequence.length || 1}</p>
+            <p>Рекорд: {record}</p>
           </div>
 
           <div className="game-controls">
