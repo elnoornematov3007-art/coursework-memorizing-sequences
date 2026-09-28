@@ -9,12 +9,19 @@ function App() {
   const [userSequence, setUserSequence] = useState<number[]>([])
   const [isUserTurn, setIsUserTurn] = useState(false)
   const [status, setStatus] = useState('Выберите сложность и нажмите «Старт»')
+  const [difficulty, setDifficulty] = useState('easy')
+
+  function getShowTime() {
+    if (difficulty === 'easy') {return 800}
+    if (difficulty === 'medium') {return 600}
+    return 400
+  }
 
   async function showSequence(sequenceToShow: number[]) {
     for (const cell of sequenceToShow) {
       setActiveCell(cell)
 
-      await new Promise((resolve) => setTimeout(resolve, 600))
+      await new Promise((resolve) => setTimeout(resolve, getShowTime()))
 
       setActiveCell(null)
 
@@ -86,7 +93,11 @@ function App() {
           <div className="difficulty">
             <label htmlFor="difficulty">Уровень сложности:</label>
 
-            <select id="difficulty">
+            <select
+              id="difficulty"
+              value={difficulty}
+              onChange={(event) => setDifficulty(event.target.value)}
+            >
               <option value="easy">Лёгкий</option>
               <option value="medium">Средний</option>
               <option value="hard">Сложный</option>
