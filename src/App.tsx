@@ -8,6 +8,7 @@ function App() {
   const [activeCell, setActiveCell] = useState<number | null>(null)
   const [userSequence, setUserSequence] = useState<number[]>([])
   const [isUserTurn, setIsUserTurn] = useState(false)
+  const [status, setStatus] = useState('Выберите сложность и нажмите «Старт»')
 
   async function showSequence(sequenceToShow: number[]) {
     for (const cell of sequenceToShow) {
@@ -27,10 +28,12 @@ function App() {
     setSequence(newSequence)
     setUserSequence([])
     setIsUserTurn(false)
+    setStatus('Запоминайте последовательность')
 
     await showSequence(newSequence)
 
     setIsUserTurn(true)
+    setStatus('Повторите последовательность')
   }
 
   async function handleCellClick(index: number) {
@@ -42,14 +45,36 @@ function App() {
 
     if (index !== sequence[currentIndex]) {
       setIsUserTurn(false)
+      setStatus('Ошибка! Игра окончена')
       return
     }
 
-    setUserSequence((previous) => [...previous, index])
+    const newUserSequence = [...userSequence, index]
+    setUserSequence(newUserSequence)
 
     setActiveCell(index)
     await new Promise((resolve) => setTimeout(resolve, 200))
     setActiveCell(null)
+
+    if (newUserSequence.length === sequence.length) {
+      if (checkAnswer(sequence, newUserSequence)) {
+        setStatus('Правильно!')
+        setIsUserTurn(false)
+
+        const nextSequence = [...sequence, ...generateSequence(1)]
+
+        setSequence(nextSequence)
+        setUserSequence([])
+
+        await new Promise((resolve) => setTimeout(resolve, 600))
+
+        setStatus('Запоминайте последовательность')
+        await showSequence(nextSequence)
+
+        setIsUserTurn(true)
+        setStatus('Повторите последовательность')
+      }
+    }
   }
 
   return (
@@ -90,9 +115,7 @@ function App() {
             <button type="button">Начать заново</button>
           </div>
 
-          <p className="game-status">
-            Выберите сложность и нажмите «Старт»
-          </p>
+          <p className="game-status">{status}</p>
         </section>
 
         <aside className="history">
