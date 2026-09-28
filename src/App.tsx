@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import generateSequence from './utils/generateSequence'
+import checkAnswer from './utils/checkAnswer'
 import './App.css'
 
 function App() {
